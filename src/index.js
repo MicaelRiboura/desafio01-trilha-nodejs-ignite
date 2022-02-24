@@ -80,8 +80,10 @@ app.put('/todos/:id', checksExistsUserAccount, checksTodoExists, (request, respo
   return response.status(201).send(todo);
 });
 
-app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
-  // Complete aqui
+app.patch('/todos/:id/done', checksExistsUserAccount, checksTodoExists, (request, response) => {
+  const { todo } = request;
+  todo.done = true;
+  return response.status(201).send(todo);
 });
 
 app.delete('/todos/:id', checksExistsUserAccount, (request, response) => {
