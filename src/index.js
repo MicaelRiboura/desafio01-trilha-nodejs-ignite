@@ -23,6 +23,18 @@ function checksExistsUserAccount(request, response, next) {
   return next();
 }
 
+function checksTodoExists(request, response, next) {
+  const { id } = request.params;
+  const { user } = request;
+  const todo = user.todos.find((t) => t.id === id);
+  if (!todo) {
+    return response.status(404).send({ error: "Invalid todo ID" });
+  }
+  request.todo = todo;
+
+  return next();
+}
+
 app.post('/users', (request, response) => {
    const { name, username } = request.body;
 
