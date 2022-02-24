@@ -22,7 +22,12 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  const { user } = request;
+  if (!user.pro && user.todos.length === 10) {
+    	return response.status(403).json({error: "You must have the PRO Plan to create a new toDo!"})
+  }
+
+  return next();
 }
 
 function checksTodoExists(request, response, next) {
